@@ -9,21 +9,27 @@
 /* Begin PBXBuildFile section */
 		41F7982227BAA6D4006727B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7982127BAA6D4006727B0 /* AppDelegate.swift */; };
 		41F7982427BAA6D4006727B0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7982327BAA6D4006727B0 /* SceneDelegate.swift */; };
-		41F7982627BAA6D4006727B0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7982527BAA6D4006727B0 /* ViewController.swift */; };
+		41F7982627BAA6D4006727B0 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7982527BAA6D4006727B0 /* HomeTableViewController.swift */; };
 		41F7982927BAA6D4006727B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41F7982727BAA6D4006727B0 /* Main.storyboard */; };
 		41F7982B27BAA6D6006727B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41F7982A27BAA6D6006727B0 /* Assets.xcassets */; };
 		41F7982E27BAA6D6006727B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41F7982C27BAA6D6006727B0 /* LaunchScreen.storyboard */; };
+		41F7983627BAA888006727B0 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7983527BAA888006727B0 /* HomeTableViewCell.swift */; };
+		41F7983927BAB85D006727B0 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7983827BAB85D006727B0 /* MenuTableViewController.swift */; };
+		41F7983C27BABD6D006727B0 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7983B27BABD6D006727B0 /* MenuTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		41F7981E27BAA6D4006727B0 /* TwitterSlideOutMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterSlideOutMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41F7982127BAA6D4006727B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41F7982327BAA6D4006727B0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		41F7982527BAA6D4006727B0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		41F7982527BAA6D4006727B0 /* HomeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		41F7982827BAA6D4006727B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		41F7982A27BAA6D6006727B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		41F7982D27BAA6D6006727B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		41F7982F27BAA6D6006727B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		41F7983527BAA888006727B0 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		41F7983827BAB85D006727B0 /* MenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
+		41F7983B27BABD6D006727B0 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +62,34 @@
 		41F7982027BAA6D4006727B0 /* TwitterSlideOutMenu */ = {
 			isa = PBXGroup;
 			children = (
+				41F7983527BAA888006727B0 /* HomeTableViewCell.swift */,
+				41F7983A27BABB75006727B0 /* View */,
+				41F7983727BAB844006727B0 /* Controller */,
 				41F7982127BAA6D4006727B0 /* AppDelegate.swift */,
 				41F7982327BAA6D4006727B0 /* SceneDelegate.swift */,
-				41F7982527BAA6D4006727B0 /* ViewController.swift */,
 				41F7982727BAA6D4006727B0 /* Main.storyboard */,
 				41F7982A27BAA6D6006727B0 /* Assets.xcassets */,
 				41F7982C27BAA6D6006727B0 /* LaunchScreen.storyboard */,
 				41F7982F27BAA6D6006727B0 /* Info.plist */,
 			);
 			path = TwitterSlideOutMenu;
+			sourceTree = "<group>";
+		};
+		41F7983727BAB844006727B0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				41F7982527BAA6D4006727B0 /* HomeTableViewController.swift */,
+				41F7983827BAB85D006727B0 /* MenuTableViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		41F7983A27BABB75006727B0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				41F7983B27BABD6D006727B0 /* MenuTableViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,7 +163,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41F7982627BAA6D4006727B0 /* ViewController.swift in Sources */,
+				41F7982627BAA6D4006727B0 /* HomeTableViewController.swift in Sources */,
+				41F7983627BAA888006727B0 /* HomeTableViewCell.swift in Sources */,
+				41F7983C27BABD6D006727B0 /* MenuTableViewCell.swift in Sources */,
+				41F7983927BAB85D006727B0 /* MenuTableViewController.swift in Sources */,
 				41F7982227BAA6D4006727B0 /* AppDelegate.swift in Sources */,
 				41F7982427BAA6D4006727B0 /* SceneDelegate.swift in Sources */,
 			);
@@ -306,7 +334,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -334,7 +362,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
