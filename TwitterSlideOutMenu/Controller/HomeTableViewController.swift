@@ -13,8 +13,9 @@ class HomeTableViewController: UITableViewController {
     
     private var menuController: MenuTableViewController = MenuTableViewController()
     
-
-
+    private var isMenuOpen: Bool = false
+    
+    private let velocityThresHold: CGFloat = 500
 }
 
 //MARK: - LifeCycle
@@ -66,7 +67,7 @@ extension HomeTableViewController {
         removeMenuView()
     }
     
-    /**    /// 1.注意左右边界 2.注意手势停止时的状态
+    /**    /// 1.注意左右边界 2.注意手势停止时的状态 3.更具Velocity判断是否切换状态
 
      */
     @objc func viewDidPan(_ sender: UIPanGestureRecognizer) {
@@ -86,15 +87,42 @@ extension HomeTableViewController {
              */
             addChild(menuController)
         }
-
+        let translation = sender.translation(in: view)
+        
         if sender.state == .changed {
-            var translation = sender.translation(in: view)
-            var positionX = min(menuWidth, translation.x)
-            positionX = max(0, positionX)
+            /// small trick
+            var panPositionX = translation.x
+            if isMenuOpen {
+                panPositionX += menuWidth
+            }
+            panPositionX = min(menuWidth, panPositionX)
+            panPositionX = max(0, panPositionX)
             // drag menu
-            menuController.view.transform = CGAffineTransform(translationX: positionX, y: 0)
-            navigationController?.view.transform = CGAffineTransform(translationX: positionX, y: 0)
+            menuController.view.transform = CGAffineTransform(translationX: panPositionX, y: 0)
+            navigationController?.view.transform = CGAffineTransform(translationX: panPositionX, y: 0)
         } else if sender.state == .ended {
+           showOrDismissMenuWhenPanGestureDidEnd(sender)
+        }
+    }
+    
+    /// change 的时候只是要跟手   真正的动画要在end的时候 所以速度要在Hand中取
+    private func showOrDismissMenuWhenPanGestureDidEnd(_ sender: UIPanGestureRecognizer) {
+        let velocity = sender.translation(in: view)
+        let positionX = isMenuOpen ? sender.translation(in: view).x + menuWidth : sender.translation(in: view).x
+        if isMenuOpen {
+            if velocity.x < -1 * velocityThresHold {
+                dismissMenuController()
+                return
+            }
+        } else {
+            if velocity.x > velocityThresHold {
+                showMenuController()
+                return
+            }
+        }
+        if positionX < menuWidth / 2 {
+            dismissMenuController()
+        } else {
             showMenuController()
         }
     }
@@ -142,14 +170,19 @@ extension HomeTableViewController {
     }
     
     private func perfromMenuControllerTransform(_ transfrom: CGAffineTransform) {
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut) { [weak self] in
+        UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut) { [weak self] in
             guard let self = self else {return}
             self.menuController.view.transform = transfrom //Menu TransForm
             //self.view.transform = transfrom // view need transform too, but navigation bar don't not move
             self.navigationController?.view.transform = transfrom
-        } completion: { finish in
-            if finish {
-                //TODO: 待定
+        } completion: { [weak self] finished in
+            guard let self = self else {return}
+            if finished {
+                if transfrom == .identity {
+                    self.isMenuOpen = false
+                } else {
+                    self.isMenuOpen = true
+                }
             }
         }
 

@@ -16,6 +16,7 @@ class MenuTableViewController: UITableViewController {
 extension MenuTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         tableView.backgroundColor = .systemYellow
         setupUI()
     }
