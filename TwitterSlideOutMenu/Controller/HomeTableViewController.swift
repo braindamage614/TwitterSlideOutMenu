@@ -15,7 +15,12 @@ class HomeTableViewController: UITableViewController {
     
     private var isMenuOpen: Bool = false
     
-    private let velocityThresHold: CGFloat = 500
+    private let velocityThresHold: CGFloat = 250
+    
+    private let darkCoverView: UIView = {
+        let view = UIView()
+        return view
+    }()
 }
 
 //MARK: - LifeCycle
@@ -32,8 +37,8 @@ extension HomeTableViewController {
     private func setupViews() {
         setupNavigationBar()
         setupTableView()
-        
         setupPanGesture()
+        setupDarkCoverView()
     }
     private func setupNavigationBar() {
         navigationItem.title = "Home"
@@ -53,6 +58,22 @@ extension HomeTableViewController {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(viewDidPan(_:)))
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(pan)
+    }
+    
+    private func setupDarkCoverView() {
+        
+        darkCoverView.backgroundColor = .black.withAlphaComponent(0.5)
+        /// 方法1
+        navigationController?.view.addSubview(darkCoverView)
+        darkCoverView.frame = navigationController!.view.frame //这里的frame 必须是NavgationView的frame 否则状态栏盖不住
+        
+        /// 方法2
+//        let mainWindow = UIApplication.shared.keyWindow
+//        mainWindow?.addSubview(darkCoverView)
+//        darkCoverView.frame = mainWindow?.frame ?? .zero
+        darkCoverView.alpha = 0
+        darkCoverView.isUserInteractionEnabled = false // darkView 可以传递手势
+        
     }
 }
 
@@ -100,6 +121,7 @@ extension HomeTableViewController {
             // drag menu
             menuController.view.transform = CGAffineTransform(translationX: panPositionX, y: 0)
             navigationController?.view.transform = CGAffineTransform(translationX: panPositionX, y: 0)
+            darkCoverView.alpha = panPositionX / menuWidth
         } else if sender.state == .ended {
            showOrDismissMenuWhenPanGestureDidEnd(sender)
         }
@@ -108,6 +130,7 @@ extension HomeTableViewController {
     /// change 的时候只是要跟手   真正的动画要在end的时候 所以速度要在Hand中取
     private func showOrDismissMenuWhenPanGestureDidEnd(_ sender: UIPanGestureRecognizer) {
         let velocity = sender.translation(in: view)
+        print("Debug: VelocityX is \(velocity.x)")
         let positionX = isMenuOpen ? sender.translation(in: view).x + menuWidth : sender.translation(in: view).x
         if isMenuOpen {
             if velocity.x < -1 * velocityThresHold {
@@ -175,14 +198,11 @@ extension HomeTableViewController {
             self.menuController.view.transform = transfrom //Menu TransForm
             //self.view.transform = transfrom // view need transform too, but navigation bar don't not move
             self.navigationController?.view.transform = transfrom
+            self.darkCoverView.alpha = transfrom == .identity ? 0 : 1
         } completion: { [weak self] finished in
             guard let self = self else {return}
             if finished {
-                if transfrom == .identity {
-                    self.isMenuOpen = false
-                } else {
-                    self.isMenuOpen = true
-                }
+                self.isMenuOpen = transfrom == .identity ? false : true
             }
         }
 
